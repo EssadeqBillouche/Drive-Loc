@@ -1,11 +1,6 @@
 <?php
 namespace classes;
 
-// Include the autoloader
-require_once __DIR__ . '/Autoloader.php';
-
-// Register the autoloader
-Autoloader::AutoloaderFunction();
 
 class user extends person
 {
@@ -14,19 +9,16 @@ class user extends person
         parent::__construct($name, $email, $password, $roleId);
     }
 
-    public function login($email, $password){}
-
     public function singup($email, $password){
         $roleId = 1;
-        $db = new dbConnaction();
-        $db = $db->getConnection();
+        $db = dbConnaction::getConnection();
+        $password = password_hash($password, PASSWORD_DEFAULT);
         $stement = $db->prepare("INSERT INTO users(email, password, role) VALUES(:email, :password, :role)");
         $stement->bindParam(':email', $email);
-        $stement->bindParam(':password', $password)
+        $stement->bindParam(':password', $password);
         $stement->bindParam(':role', $roleId);
         $stement->execute();
-
     }
-    public function logout(){}
+
 
 }

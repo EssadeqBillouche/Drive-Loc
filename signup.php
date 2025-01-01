@@ -1,9 +1,15 @@
+<?php
+require_once 'classes/User.php';
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
-    <title>ROYAL CARS - Car Rental HTML Template</title>
+    <title>Sing Up</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="Free HTML Templates" name="keywords">
     <meta content="Free HTML Templates" name="description">
@@ -107,21 +113,21 @@
                         <h1 class="text-white m-0">Sign Up</h1>
                     </div>
                     <div class="card-body rounded-bottom bg-white p-5">
-                        <form>
+                        <form action="" method="_POST">
                             <div class="form-group">
-                                <input type="text" class="form-control p-4" placeholder="Your name" required>
+                                <input type="text" class="form-control p-4" name = 'UserName' placeholder="Your name" required>
                             </div>
                             <div class="form-group">
-                                <input type="email" class="form-control p-4" placeholder="Your email" required>
+                                <input type="email" class="form-control p-4" name = 'UserEmail' placeholder="Your email" required>
                             </div>
                             <div class="form-group">
-                                <input type="password" class="form-control p-4" placeholder="Password" required>
+                                <input type="password" class="form-control p-4" name = 'password' placeholder="Password" required>
                             </div>
                             <div class="form-group">
-                                <input type="password" class="form-control p-4" placeholder="Confirm password" required>
+                                <input type="password" class="form-control p-4" name = 'confirmPassword' placeholder="Confirm password" required>
                             </div>
                             <div class="form-group mb-0">
-                                <button class="btn btn-primary btn-block py-3" type="submit">Sign Up</button>
+                                <button class="btn btn-primary btn-block py-3" name = 'SubmitSingUp' type="submit">Sign Up</button>
                             </div>
                         </form>
                     </div>

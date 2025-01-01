@@ -2,31 +2,30 @@
 
 namespace classes;
 
+use PDO;
+use PDOException;
 
-
-class dbConnaction{
+class dbConnaction {
     private $db = 'carrent';
     private $host = 'localhost';
     private $username = 'root';
     private $password = '';
-    private $connection;
-    public function __construct(){
+    private static $connection = null;
+
+    private function __construct() {
         try {
-            $this->connection = new pdo('mysql:host='.$this->host.';dbname='.$this->db, $this->username, $this->password);
-            $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        }
-        catch (PDOException $e) {
-            echo 'Connection failed: in the dbConnection Class' . $e->getMessage();
+            self::$connection = new PDO('mysql:host=' . $this->host . ';dbname=' . $this->db, $this->username, $this->password);
+            self::$connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        } catch (PDOException $e) {
+            die('Connection failed: ' . $e->getMessage());
         }
     }
 
-    public function getConnection(){
-        return $this->connection;
+    public static function getConnection() {
+        if (self::$connection === null) {
+            new self();
+        }
+        return self::$connection;
     }
 }
-
-
-
-
-
 ?>

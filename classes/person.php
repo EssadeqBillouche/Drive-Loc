@@ -16,8 +16,7 @@ class person {
 
     public function login($email, $password, $roleId) {
 
-        $dbConnection = new dbConnaction();
-        $dbConnection = $dbConnection->getConnection();
+        $dbConnection = dbConnaction::getConnection();
         $stetment = $dbConnection->prepare("SELECT * FROM users WHERE email = :email");
         $stetment->bindParam(':email', $email);
         $stetment->execute();
@@ -41,4 +40,9 @@ class person {
             }
         }
     }
+    public function logout() {
+        session_destroy();
+        header('Location: index.php');
+    }
+
 }

@@ -2,12 +2,15 @@
 require_once 'classes/Autoloader.php';
 
 use classes\Autoloader;
-use classes\User;
+use classes\user;
 
 Autoloader::AutoloaderFunction();
 
-$user = new User('John Doe', 'john@example.com', 'password123', 1);
-echo $user->displayUserInfo();
+try {
+    $test = new user();
+}catch (Exception $e){
+    echo 'Makhdamch' . $e->getMessage();
+}
 ?>
 
 <!DOCTYPE html>
@@ -108,7 +111,7 @@ echo $user->displayUserInfo();
                         </div>
                         <a href="contact.html" class="nav-item nav-link">Contact</a>
                         <a href="login.html" class="nav-item nav-link">Login</a>
-                        <a href="signup.html" class="nav-item nav-link"><span class="btn btn-primary py-md-1 px-md-3">Sign Up</span></a>
+                        <a href="signup.php" class="nav-item nav-link"><span class="btn btn-primary py-md-1 px-md-3">Sign Up</span></a>
                     </div>
                 </div>
             </nav>
