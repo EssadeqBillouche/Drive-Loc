@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'logout.php';
+
 require_once 'classes/Autoloader.php';
 use classes\Autoloader;
 //include 'signup.php';
@@ -11,6 +11,7 @@ use classes\user;
 use classes\admin;
 
 if(isset($_POST['login'])){
+
     $email = $_POST['email'];
     $password = trim($_POST['password']);
     $newperson = person::EmailExists($email);

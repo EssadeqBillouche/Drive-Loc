@@ -1,8 +1,8 @@
 <?php
 session_start();
-require_once 'classes/Autoloader.php';
+require 'classes/Autoloader.php';
 use classes\Autoloader;
-Autoloader::Autoloader();
+Autoloader::AutoloaderFunction();
 
 if ( $_SESSION['role'] == 1) {
 
@@ -198,7 +198,7 @@ if ( $_SESSION['role'] == 1) {
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form id="multipleCarsForm" action="addCarForm" method="POST">
+                        <form id="multipleCarsForm" action="DashBoardHnadling.php" method="POST">
                             <div id="carFormsContainer">
                                 <!-- Dynamic Car Form Template -->
                                 <div class="car-form-template">
@@ -236,7 +236,7 @@ if ( $_SESSION['role'] == 1) {
                                     </div>
                                     <div class="form-group">
                                         <label for="image1">Car Image</label>
-                                        <input type="file" class="form-control" id="image1" name="image[]" required>
+                                        <input type="text" class="form-control" id="image1" name="image[]" required>
                                     </div>
                                     <hr>
                                 </div>
@@ -244,7 +244,7 @@ if ( $_SESSION['role'] == 1) {
                             <button type="button" class="btn btn-success mb-3" id="addCarFormButton">
                                 <i class="fa fa-plus"></i> Add Another Car
                             </button>
-                            <button type="submit" class="btn btn-primary btn-block">
+                            <button type="submit" class="btn btn-primary btn-block" name="addCarFormMult">
                                 <i class="fa fa-save"></i> Save All Cars
                             </button>
                         </form>
@@ -370,7 +370,7 @@ if ( $_SESSION['role'] == 1) {
                     </div>
                     <div class="form-group">
                         <label for="image">Car Image</label>
-                        <input type="file" class="form-control" id="image" required>
+                        <input type="text" class="form-control" id="image" required>
                     </div>
                     <button type="submit" class="btn btn-primary btn-block"><i class="fa fa-plus"></i> Add Car</button>
                 </form>
@@ -420,7 +420,7 @@ if ( $_SESSION['role'] == 1) {
                 </div>
                 <div class="form-group">
                     <label for="image${carCount}">Car Image</label>
-                    <input type="file" class="form-control" id="image${carCount}" name="image[]" required>
+                    <input type="text" class="form-control" id="image${carCount}" name="image[]" required>
                 </div>
                 <hr>
             </div>
@@ -429,10 +429,10 @@ if ( $_SESSION['role'] == 1) {
     });
 
     // Optional: Handle form submission
-    document.getElementById('multipleCarsForm').addEventListener('submit', function (e) {
-        e.preventDefault();
-        alert('All cars have been submitted!');
-    });
+    // document.getElementById('multipleCarsForm').addEventListener('submit', function (e) {
+    //     e.preventDefault();
+    //     alert('All cars have been submitted!');
+    // });
 </script>
 
 

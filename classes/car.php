@@ -12,6 +12,7 @@ class car{
     private $carAvailability;
     private $carGearBox;
     private $carMileage;
+    private $carCategory;
 
     public function addCar($carName, $carPrice, $carImage, $carBrand, $carModel, $carAvailability){
         $db = dbConnaction::getConnection();
