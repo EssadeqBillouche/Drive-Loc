@@ -1,3 +1,17 @@
+<?php
+session_start();
+require_once 'classes/Autoloader.php';
+use classes\Autoloader;
+Autoloader::Autoloader();
+
+if ( $_SESSION['role'] == 1) {
+
+}else{
+    header("location:index.php");
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -84,7 +98,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form id="addCategoryForm">
+                        <form id="addCategoryForm" action="DashBoardHnadling.php" method="post">
                             <div class="form-group">
                                 <label for="categoryName">Category Name</label>
                                 <input type="text" class="form-control" id="categoryName" placeholder="Enter category name" required>
@@ -93,7 +107,7 @@
                                 <label for="categoryDescription">Description</label>
                                 <textarea class="form-control" id="categoryDescription" rows="3" placeholder="Enter category description" required></textarea>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-block mt-3">
+                            <button type="submit" name = "addCategory" class="btn btn-primary btn-block mt-3">
                                 <i class="fa fa-save"></i> Save Category
                             </button>
                         </form>
@@ -184,7 +198,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form id="multipleCarsForm">
+                        <form id="multipleCarsForm" action="addCarForm" method="POST">
                             <div id="carFormsContainer">
                                 <!-- Dynamic Car Form Template -->
                                 <div class="car-form-template">

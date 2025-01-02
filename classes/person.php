@@ -13,7 +13,6 @@ class person {
         $this->email = $email;
         $this->password = $password;
     }
-
     public function login($email, $password) {
 
         $dbConnection = dbConnaction::getConnection();
@@ -32,7 +31,7 @@ class person {
                     $_SESSION['email'] = $result['user_email'];
                     $_SESSION['role'] = $result['user_role'];
                     if ($result['user_role'] == 1) {
-                        header('Location: adminDashboard.php');
+                        header('Location: Dashboard.php');
                         exit();
                     }else{
                         header('Location: index.php');
