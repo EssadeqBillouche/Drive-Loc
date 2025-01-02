@@ -1,16 +1,13 @@
 <?php
+session_start();
 require_once 'classes/Autoloader.php';
-
+require 'logout.php';
 use classes\Autoloader;
 use classes\user;
+use classes\person;
 
 Autoloader::AutoloaderFunction();
 
-try {
-    $test = new user();
-}catch (Exception $e){
-    echo 'Makhdamch' . $e->getMessage();
-}
 ?>
 
 <!DOCTYPE html>
@@ -110,8 +107,54 @@ try {
                             </div>
                         </div>
                         <a href="contact.html" class="nav-item nav-link">Contact</a>
-                        <a href="login.html" class="nav-item nav-link">Login</a>
-                        <a href="signup.php" class="nav-item nav-link"><span class="btn btn-primary py-md-1 px-md-3">Sign Up</span></a>
+                        <?php
+                        if (isset($_SESSION['name'])) {
+                            echo '<div class="nav-item dropdown">
+    <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" data-toggle="dropdown">
+        <div class="profile-avatar bg-primary rounded-circle d-flex align-items-center justify-content-center position-relative" 
+             style="width: 40px; height: 40px;">
+            <span class="text-white font-weight-bold">'.substr($_SESSION["name"], -1).'</span>
+            <span class="status-badge"></span>
+        </div>
+        <span class="ml-2 d-none d-md-inline text-white">'.$_SESSION["name"].'</span>
+    </a>
+    <div class="dropdown-menu dropdown-menu-right profile-dropdown">
+        <div class="px-4 py-3 bg-light border-bottom">
+            <span class="d-block text-muted small">Signed in as</span>
+            <span class="d-block font-weight-bold">'.$_SESSION["name"].'</span>
+            <span class="badge badge-success mt-1">Premium Member</span>
+        </div>
+        <div class="p-2">
+            <a class="dropdown-item d-flex align-items-center py-2" href="#">
+                <i class="fas fa-user mr-2 text-primary"></i>
+                <span>Profile</span>
+            </a>
+            <a class="dropdown-item d-flex align-items-center py-2" href="#">
+                <i class="fas fa-cog mr-2 text-secondary"></i>
+                <span>Settings</span>
+            </a>
+            <a class="dropdown-item d-flex align-items-center py-2" href="#">
+                <i class="fas fa-car mr-2 text-info"></i>
+                <span>My Bookings</span>
+            </a>
+        </div>
+        <div class="dropdown-divider"></div>
+        <div class="dropdown-divider"></div>
+        <form action="logout.php" method="POST" style="display: inline;">
+    <button type="submit" class="btn btn-danger btn-sm ml-3" name="Logoutbtn">
+        <i class="fa fa-sign-out-alt"></i> Logojjjut
+    </button>
+</form>
+
+
+    </div>
+</div><button class="btn btn-danger btn-sm ml-3" href="logout.php"><i class="fa fa-sign-out-alt"></i> Logout</button>';
+                        }else{
+                            echo '<a href="login.php" class="nav-item nav-link">Login</a>
+                        <a href="signup.php" class="nav-item nav-link"><span class="btn btn-primary py-md-1 px-md-3">Sign Up</span></a>';
+                        }
+                        ?>
+
                     </div>
                 </div>
             </nav>

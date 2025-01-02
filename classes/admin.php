@@ -1,8 +1,11 @@
 <?php
 namespace classes;
-//require_once 'Autoloader.php';
-//Autoloader::AutoloaderFunction();
 
-class admin{
+
+class admin extends person {
+
+    public function __construct($name, $email, $password, $roleId){
+        parent:: __construct($email, $password);
+    }
 
 }

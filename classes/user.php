@@ -6,19 +6,23 @@ class user extends person
 {
     public function __construct($name, $email, $password, $roleId)
     {
-        parent::__construct($name, $email, $password, $roleId);
+        parent::__construct($email, $password);
     }
 
-    public function singup($email, $password){
-        $roleId = 1;
+    public function singup($name,$email, $password){
+        $roleId = 2;
         $db = dbConnaction::getConnection();
         $password = password_hash($password, PASSWORD_DEFAULT);
-        $stement = $db->prepare("INSERT INTO users(email, password, role) VALUES(:email, :password, :role)");
+        $stement = $db->prepare("INSERT INTO users(user_name,user_email, user_password, user_role) VALUES(:name,:email, :password, :role)");
         $stement->bindParam(':email', $email);
         $stement->bindParam(':password', $password);
+        $stement->bindParam(':name', $name);
         $stement->bindParam(':role', $roleId);
         $stement->execute();
+       header('Location: /Drive-Loc/login.php');
+       exit();
     }
+
 
 
 }

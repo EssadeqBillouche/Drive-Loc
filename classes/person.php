@@ -1,48 +1,60 @@
 <?php
 namespace classes;
 
+use PDO;
+
 class person {
     protected $name;
     protected $email;
     protected $password;
     protected $role;
 
-    public function __construct($name, $email, $password, $roleId) {
-        $this->name = $name;
+    public function __construct($email, $password) {
         $this->email = $email;
         $this->password = $password;
-        $this->role = $roleId;
     }
 
-    public function login($email, $password, $roleId) {
+    public function login($email, $password) {
 
         $dbConnection = dbConnaction::getConnection();
-        $stetment = $dbConnection->prepare("SELECT * FROM users WHERE email = :email");
+        $stetment = $dbConnection->prepare("SELECT * FROM users WHERE user_email = :email");
         $stetment->bindParam(':email', $email);
         $stetment->execute();
-        echo $stetment;
-        if ($stetment->rowCount() === 1) {
-            $stetment->fetch();
-            if (password_verify($password, $stetment['password']))
+        $result = $stetment->fetch(PDO::FETCH_ASSOC);
+
+        var_dump($result);
+        var_dump(password_verify($password, $result['user_password']));
+            if (password_verify($password, $result['user_password']))
             {
                     session_start();
-                    $_SESSION['id'] = $stetment['id'];
-                    $_SESSION['name'] = $stetment['name'];
-                    $_SESSION['email'] = $stetment['email'];
-                    $_SESSION['role'] = $stetment['role'];
-                    if ($roleId == 1) {
+                    $_SESSION['id'] = $result['user_id'];
+                    $_SESSION['name'] = $result['user_name'];
+                    $_SESSION['email'] = $result['user_email'];
+                    $_SESSION['role'] = $result['user_role'];
+                    if ($result['user_role'] == 1) {
                         header('Location: adminDashboard.php');
+                        exit();
                     }else{
                         header('Location: index.php');
+                        exit();
                     }
             }else{
-                    echo "Wrong password";
+                var_dump($password);
             }
-        }
     }
-    public function logout() {
-        session_destroy();
-        header('Location: index.php');
+
+
+    public static function EmailExists($email){
+        $db = dbConnaction::getConnection();
+        $statement = $db->prepare("SELECT * FROM users WHERE user_email = :email");
+        $statement->bindParam(':email', $email);
+        $statement->execute();
+        $result = $statement->fetch();
+        if($statement->rowCount() > 0){
+            return true;
+        }else{
+            return false;
+        }
     }
 
 }

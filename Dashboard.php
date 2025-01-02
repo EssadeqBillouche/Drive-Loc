@@ -41,7 +41,11 @@
             <div class="d-inline-flex align-items-center">
                 <img src="img/admin-avatar.png" alt="Admin Avatar" class="rounded-circle" width="40" height="40">
                 <span class="ml-2">Admin Name</span>
-                <button class="btn btn-danger btn-sm ml-3"><i class="fa fa-sign-out-alt"></i> Logout</button>
+                <form action="logout.php" method="POST" style="display: inline;">
+                    <button type="submit" class="btn btn-danger btn-sm ml-3">
+                        <i class="fa fa-sign-out-alt"></i> Logout
+                    </button>
+                </form>
             </div>
         </div>
     </div>
@@ -318,7 +322,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form>
+                <form action="" method="POST">
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <label for="carName">Car Name</label>

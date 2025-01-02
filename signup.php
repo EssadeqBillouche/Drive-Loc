@@ -1,9 +1,37 @@
 <?php
-require_once 'classes/User.php';
+require_once 'classes/Autoloader.php';
+use classes\Autoloader;
+Autoloader::AutoloaderFunction();
+use classes\user;
+use classes\person;
 
 
+
+if(isset($_POST['SubmitSingUp'])){
+    $username = $_POST['name'];
+    $email = $_POST['email'];
+    $password = trim($_POST['password']);
+    $repassword = trim($_POST['repassword']);
+
+    echo $password;
+
+    $regexEmail = "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/";
+    $regexPassword = "/^.{6,}$/";
+
+   if($password != $repassword){
+       echo '<div class="alert alert-danger" role="alert">password not Match</div>';
+   }elseif (!preg_match($regexEmail, $email)){
+       echo '<div class="alert alert-danger" role="alert">Invalid email format</div>';
+   }elseif (!preg_match($regexPassword, $password)){
+       echo '<div class="alert alert-danger" role="alert">Password must be at least 6 characters long</div>';
+   }elseif (user::EmailExists($email)){
+       echo '<div class="alert alert-danger" role="alert">the email already exists</div>';
+   }else{
+        $newUser = new user($username, $email, $password,1);
+        $newUser->singup($username,$email, $password);
+   }
+}
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -68,9 +96,6 @@ require_once 'classes/User.php';
     </div>
 </div>
 <!-- Topbar End -->
-
-
-<!-- Navbar Start -->
 <!-- Navbar Start -->
 <div class="container-fluid position-relative nav-bar p-0">
     <div class="position-relative px-lg-5" style="z-index: 9;">
@@ -95,7 +120,7 @@ require_once 'classes/User.php';
                         </div>
                     </div>
                     <a href="contact.html" class="nav-item nav-link">Contact</a>
-                    <a href="login.html" class="nav-item nav-link"><span class="btn btn-primary py-md-1 px-md-3">Login</span></a>
+                    <a href="login.php" class="nav-item nav-link"><span class="btn btn-primary py-md-1 px-md-3">Login</span></a>
                 </div>
             </div>
         </nav>
@@ -113,18 +138,18 @@ require_once 'classes/User.php';
                         <h1 class="text-white m-0">Sign Up</h1>
                     </div>
                     <div class="card-body rounded-bottom bg-white p-5">
-                        <form action="" method="_POST">
+                        <form action="" method="post">
                             <div class="form-group">
-                                <input type="text" class="form-control p-4" name = 'UserName' placeholder="Your name" required>
+                                <input type="text" class="form-control p-4" name = 'name' placeholder="Your name" required>
                             </div>
                             <div class="form-group">
-                                <input type="email" class="form-control p-4" name = 'UserEmail' placeholder="Your email" required>
+                                <input type="email" class="form-control p-4" name = 'email' placeholder="Your email" required>
                             </div>
                             <div class="form-group">
                                 <input type="password" class="form-control p-4" name = 'password' placeholder="Password" required>
                             </div>
                             <div class="form-group">
-                                <input type="password" class="form-control p-4" name = 'confirmPassword' placeholder="Confirm password" required>
+                                <input type="password" class="form-control p-4" name = 'repassword' placeholder="Confirm password" required>
                             </div>
                             <div class="form-group mb-0">
                                 <button class="btn btn-primary btn-block py-3" name = 'SubmitSingUp' type="submit">Sign Up</button>
