@@ -7,23 +7,26 @@ class car{
     private $carName;
     private $carPrice;
     private $carImage;
-    private $carBrand;
     private $carModel;
     private $carAvailability;
     private $carGearBox;
     private $carMileage;
     private $carCategory;
 
-    public function addCar($carName, $carPrice, $carImage, $carBrand, $carModel, $carAvailability){
+    public function addCar($carName, $carPrice, $carImage, $carModel, $carAvailability, $carGearBox, $carMileage, $carCategory){
         $db = dbConnaction::getConnection();
         try {
-            $stmnt = $db->prepare("Insert into car (car_brand,car_category,car_image,car_price_per_day,car_availability,model,GearBox,mileage) values (:name, :price, :image, :category, :model)");
-            $stmnt->bindValue(':name', $this->name);
-            $stmnt->bindValue(':price', $this->price);
-            $stmnt->bindValue(':image', $this->image);
-            $stmnt->bindValue(':category', $this->category);
-            $stmnt->bindValue(':model', $this->model);
+            $stmnt = $db->prepare("Insert into car (car_brand,car_category,car_image,car_price_per_day,car_availability,model,GearBox,mileage) values (:name, :category, :image, :price,:availability, :model, :GearBox, :mileage)");
+            $stmnt->bindParam(":name", $carName);
+            $stmnt->bindParam(":category", $carCategory);
+            $stmnt->bindParam(":price", $carPrice,);
+            $stmnt->bindParam(":image", $carImage);
+            $stmnt->bindParam(":availability", $carAvailability);
+            $stmnt->bindParam(":model", $carModel);
+            $stmnt->bindParam(":GearBox", $carGearBox);
+            $stmnt->bindParam(":mileage", $carMileage);
             $stmnt->execute();
+
         }catch (Exception $e){
             echo "prob in add car ". $e->getMessage();
         }

@@ -101,11 +101,11 @@ if ( $_SESSION['role'] == 1) {
                         <form id="addCategoryForm" action="DashBoardHnadling.php" method="post">
                             <div class="form-group">
                                 <label for="categoryName">Category Name</label>
-                                <input type="text" class="form-control" id="categoryName" placeholder="Enter category name" required>
+                                <input type="text" class="form-control" name = "categoryName" id="categoryName" placeholder="Enter category name" required>
                             </div>
                             <div class="form-group">
                                 <label for="categoryDescription">Description</label>
-                                <textarea class="form-control" id="categoryDescription" rows="3" placeholder="Enter category description" required></textarea>
+                                <textarea class="form-control" name = "categoryDescription" id="categoryDescription" rows="3" placeholder="Enter category description" required></textarea>
                             </div>
                             <button type="submit" name = "addCategory" class="btn btn-primary btn-block mt-3">
                                 <i class="fa fa-save"></i> Save Category
@@ -212,6 +212,7 @@ if ( $_SESSION['role'] == 1) {
                                             <label for="carModel1">Car Model</label>
                                             <input type="text" class="form-control" id="carModel1" name="carModel[]" placeholder="Car Model" required>
                                         </div>
+
                                     </div>
                                     <div class="form-row">
                                         <div class="form-group col-md-4">
