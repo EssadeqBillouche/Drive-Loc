@@ -2,6 +2,8 @@
 session_start();
 require 'classes/Autoloader.php';
 use classes\Autoloader;
+use classes\category;
+
 Autoloader::AutoloaderFunction();
 
 if ( $_SESSION['role'] == 1) {
@@ -87,6 +89,9 @@ if ( $_SESSION['role'] == 1) {
 
         </div>
 
+
+
+        ?>
         <!--    New Category    -->
         <div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -224,6 +229,26 @@ if ( $_SESSION['role'] == 1) {
                                             <select id="gearbox1" class="form-control" name="gearbox[]">
                                                 <option value="AUTO">Automatic</option>
                                                 <option value="Manual">Manual</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="gearbox1">Category</label>
+                                            <select id="gearbox1" class="form-control" name="Category[]">
+                                                 <?php
+                                                    $Categories = category::displayAllCategories();
+                                                    foreach ($Categories as $Category) {
+                                                        echo '<option value="' . $Category["Category_id"] . '">' . $Category["Category_name"] . '</option>';
+                                                    }
+                                                 ?>
+
+
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="gearbox1">availability</label>
+                                            <select id="gearbox1" class="form-control" name="availability[]">
+                                                <option value="available">available</option>
+                                                <option value="Occupied">Occupied</option>
                                             </select>
                                         </div>
                                         <div class="form-group col-md-4">

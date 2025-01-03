@@ -3,6 +3,8 @@
 namespace classes;
 
 
+use PDO;
+
 class category
 {
     private $nameCategory;
@@ -26,6 +28,13 @@ class category
         } else {
             return false;
         }
+    }
+
+    public static function displayAllCategories() {
+        $Connection = dbConnaction::getConnection();
+        $STEM =$Connection->prepare("SELECT * FROM category");
+        $STEM->execute();
+        return $STEM->fetchAll(PDO::FETCH_ASSOC);
     }
 
 

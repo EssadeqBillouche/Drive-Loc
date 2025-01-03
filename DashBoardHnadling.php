@@ -8,8 +8,8 @@ Autoloader::AutoloaderFunction();
 if (isset($_POST['addCarFormMult']))
 {
     $carName = $_POST['carName'];
-    $availability = $_POST['carBrand'];
-    $category = $_POST['category'];
+    $availability = $_POST['availability'];
+    $category = $_POST['Category'];
     $gearbox = $_POST['gearbox'];
     $mileage = $_POST['mileage'];
     $year = $_POST['year'];
@@ -17,7 +17,7 @@ if (isset($_POST['addCarFormMult']))
     $image = $_POST['image'];
     $NewCar = new Car();
     foreach ($carName as $index => $cars) {
-        $NewCar->addCar($carName,$price,$image,$year,$availability,$gearbox,$mileage,$category);
+        $NewCar->addCar($carName[$index],$price[$index],$image[$index],$year[$index],$availability[$index],$gearbox[$index],$mileage[$index],$category[$index]);
     }
 
 }elseif (isset($_POST['addCategory'])) {
