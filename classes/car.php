@@ -32,6 +32,13 @@ class car{
         }
 
     }
+    public function displayAllCars(){
+        $db = dbConnaction::getConnection();
+        $stmt = $db->prepare("SELECT * FROM car");
+        $stmt->execute();
+        $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $stmt;
+    }
 
 }
 

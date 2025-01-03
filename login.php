@@ -109,7 +109,7 @@ if(isset($_POST['login'])){
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Cars</a>
                         <div class="dropdown-menu rounded-0 m-0">
-                            <a href="car.html" class="dropdown-item">Car Listing</a>
+                            <a href="CarDisplay.php" class="dropdown-item">Car Listing</a>
                             <a href="detail.html" class="dropdown-item">Car Detail</a>
                             <a href="booking.html" class="dropdown-item">Car Booking</a>
                         </div>

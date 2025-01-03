@@ -37,6 +37,11 @@ class category
         return $STEM->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public static function getCategoryName($id) {
+        $connection = dbConnaction::getConnection();
+        $STEM = $connection->prepare("SELECT  FROM category WHERE id = :id");
+    }
+
 
 
 }

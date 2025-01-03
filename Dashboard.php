@@ -91,7 +91,6 @@ if ( $_SESSION['role'] == 1) {
 
 
 
-        ?>
         <!--    New Category    -->
         <div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
