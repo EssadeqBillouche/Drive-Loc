@@ -1,9 +1,7 @@
 <?php
 
 namespace classes;
-
 use PDO;
-use PDOException;
 
 class dbConnaction {
     private $db = 'carrent';

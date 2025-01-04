@@ -166,43 +166,23 @@ Autoloader::AutoloaderFunction();
     <!-- Search Start -->
     <div class="container-fluid bg-white pt-3 px-lg-5">
         <div class="row mx-n2">
-            <div class="col-xl-2 col-lg-4 col-md-6 px-2">
+            <!-- Category Selection -->
+            <div class="col-md-4 px-2">
                 <select class="custom-select px-4 mb-3" style="height: 50px;">
-                    <option selected>Pickup Location</option>
-                    <option value="1">Location 1</option>
-                    <option value="2">Location 2</option>
-                    <option value="3">Location 3</option>
+                    <option selected="">Select Category</option>
+                    <option value="1">Category 1</option>
+                    <option value="2">Category 2</option>
+                    <option value="3">Category 3</option>
                 </select>
             </div>
-            <div class="col-xl-2 col-lg-4 col-md-6 px-2">
-                <select class="custom-select px-4 mb-3" style="height: 50px;">
-                    <option selected>Drop Location</option>
-                    <option value="1">Location 1</option>
-                    <option value="2">Location 2</option>
-                    <option value="3">Location 3</option>
-                </select>
+
+            <!-- Search Input -->
+            <div class="col-md-4 px-2">
+                <input type="text" class="form-control px-4 mb-3" placeholder="Search..." style="height: 50px;">
             </div>
-            <div class="col-xl-2 col-lg-4 col-md-6 px-2">
-                <div class="date mb-3" id="date" data-target-input="nearest">
-                    <input type="text" class="form-control p-4 datetimepicker-input" placeholder="Pickup Date"
-                        data-target="#date" data-toggle="datetimepicker" />
-                </div>
-            </div>
-            <div class="col-xl-2 col-lg-4 col-md-6 px-2">
-                <div class="time mb-3" id="time" data-target-input="nearest">
-                    <input type="text" class="form-control p-4 datetimepicker-input" placeholder="Pickup Time"
-                        data-target="#time" data-toggle="datetimepicker" />
-                </div>
-            </div>
-            <div class="col-xl-2 col-lg-4 col-md-6 px-2">
-                <select class="custom-select px-4 mb-3" style="height: 50px;">
-                    <option selected>Select A Car</option>
-                    <option value="1">Car 1</option>
-                    <option value="2">Car 1</option>
-                    <option value="3">Car 1</option>
-                </select>
-            </div>
-            <div class="col-xl-2 col-lg-4 col-md-6 px-2">
+
+            <!-- Search Button -->
+            <div class="col-md-4 px-2">
                 <button class="btn btn-primary btn-block mb-3" type="submit" style="height: 50px;">Search</button>
             </div>
         </div>
@@ -210,24 +190,11 @@ Autoloader::AutoloaderFunction();
     <!-- Search End -->
 
 
-    <!-- Page Header Start -->
-    <div class="container-fluid page-header">
-        <h1 class="display-3 text-uppercase text-white mb-3">Car Listing</h1>
-        <div class="d-inline-flex text-white">
-            <h6 class="text-uppercase m-0"><a class="text-white" href="">Home</a></h6>
-            <h6 class="text-body m-0 px-3">/</h6>
-            <h6 class="text-uppercase text-body m-0">Car Listing</h6>
-        </div>
-    </div>
-    <!-- Page Header Start -->
-
-
     <!-- Rent A Car Start -->
-    <div class="container-fluid py-5">
-        <div class="container pt-5 pb-3">
-            <h1 class="display-4 text-uppercase text-center mb-5">Find Your Car</h1>
+    <div class="container-fluid py-1">
+        <div class="container pt-5 pb-1">
             <div class="row">
-                <div class="col-lg-4 col-md-6 mb-2">
+                <div class="Card_Card_ col-lg-4 col-md-6 mb-2">
                     <div class="rent-item mb-4">
                         <img class="img-fluid mb-4" src="img/car-rent-1.png" alt="">
                         <h4 class="text-uppercase mb-4">Mercedes Benz R3</h4>
