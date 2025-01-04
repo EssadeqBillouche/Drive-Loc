@@ -11,9 +11,10 @@ class car{
     private $carAvailability;
     private $carGearBox;
     private $carMileage;
+    private $availability;
     private $carCategory;
 
-    public function addCar($carName, $carPrice, $carImage, $carModel, $carAvailability, $carGearBox, $carMileage, $carCategory){
+    public function addCar($carName, $carPrice, $carImage, $carModel, $carAvailability, $carGearBox, $carMileage, $carCategory,){
         $db = dbConnaction::getConnection();
         try {
             $stmnt = $db->prepare("Insert into car (car_brand,car_category,car_image,car_price_per_day,car_availability,model,GearBox,mileage) values (:name, :category, :image, :price,:availability, :model, :GearBox, :mileage)");

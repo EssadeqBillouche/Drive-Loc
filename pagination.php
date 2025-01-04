@@ -1,48 +1,10 @@
 <?php
 
-namespace classes;
-require "dbConnaction.php";
-use PDO;
-class pagination
-{
-    private $lignesPerPage = 6;
-    private $connection;
+require_once './classes/Autoloader.php';
+use classes\Autoloader;
+Autoloader::AutoloaderFunction();
+use classes\category;
 
-    public function getLinesPerPage()
-    {
-        return $this->lignesPerPage;
-    }
-
-    public function numberOfCars()
-    {
-        $this->connection = dbConnaction::getConnection();
-        $query = $this->connection->prepare("SELECT COUNT(*) AS total FROM car");
-        $query->execute();
-        $result = $query->fetch(PDO::FETCH_ASSOC);
-        return $result['total'] ;
-    }
-
-    public function getCars($page = 1)
-    {
-        $offset = ($page - 1) * $this->lignesPerPage;
-        $connection = $this->connection;
-        $query = $connection->prepare("SELECT * FROM car LIMIT :offset, :limit");
-        $query->bindParam(':offset', $offset, PDO::PARAM_INT);
-        $query->bindParam(':limit', $this->lignesPerPage, PDO::PARAM_INT);
-        $query->execute();
-        return $query->fetchAll(PDO::FETCH_ASSOC);
-    }
-}
-
-
-$pagination = new Pagination();
-
-$totalCars = $pagination->numberOfCars();
-echo "Total Cars: $totalCars\n";
-$cars = $pagination->getCars(1);
-foreach ($cars as $car) {
-    echo "Brand: {$car['car_brand']}, category: {$car['car_category']}, Price: {$car['car_price_per_day']}\n";
-}
 ?>
 
 
@@ -72,10 +34,10 @@ foreach ($cars as $car) {
     <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 
     <!-- Customized Bootstrap Stylesheet -->
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Template Stylesheet -->
-    <link href="../css/style.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
 </head>
 
 <body>
@@ -112,7 +74,7 @@ foreach ($cars as $car) {
 </div>
 <!-- Topbar End -->
 
-<script src = "../js/dataFetch.js"></script>
+
 <!-- Navbar Start -->
 <div class="container-fluid position-relative nav-bar p-0">
     <div class="position-relative px-lg-5" style="z-index: 9;">
@@ -201,15 +163,19 @@ foreach ($cars as $car) {
 
 
 <!-- Search Start -->
-<div class="container-fluid bg-white pt-3 px-lg-5">
+<div class=" container-fluid bg-white pt-3 px-lg-5">
     <div class="row mx-n2">
         <!-- Category Selection -->
         <div class="col-md-4 px-2">
-            <select class="custom-select px-4 mb-3" style="height: 50px;">
-                <option selected="">Select Category</option>
-                <option value="1">Category 1</option>
-                <option value="2">Category 2</option>
-                <option value="3">Category 3</option>
+            <select id="SelectedCategory" class="custom-select px-4 mb-3" style="height: 50px;">
+                <option selected="all">Select Category</option>
+                <?php
+                $allCategory = category::displayAllCategories();
+                    foreach ($allCategory as $category) {
+                        echo '<option value="'.$category['Category_id'].'">'.$category['Category_name'].'</option>';
+                    }
+                ?>
+
             </select>
         </div>
 
@@ -230,28 +196,7 @@ foreach ($cars as $car) {
 <!-- Rent A Car Start -->
 <div class="container-fluid py-1">
     <div class="container pt-5 pb-1">
-        <div class="row" id = "addCardHere">
-            <div class="Card_Card_ col-lg-4 col-md-6 mb-2">
-                <div class="rent-item mb-4">
-                    <img class="img-fluid mb-4" src="img/car-rent-1.png" alt="">
-                    <h4 class="text-uppercase mb-4">Mercedes Benz R3</h4>
-                    <div class="d-flex justify-content-center mb-4">
-                        <div class="px-2">
-                            <i class="fa fa-car text-primary mr-1"></i>
-                            <span>2015</span>
-                        </div>
-                        <div class="px-2 border-left border-right">
-                            <i class="fa fa-cogs text-primary mr-1"></i>
-                            <span>AUTO</span>
-                        </div>
-                        <div class="px-2">
-                            <i class="fa fa-road text-primary mr-1"></i>
-                            <span>25K</span>
-                        </div>
-                    </div>
-                    <a class="btn btn-primary px-3" href="">$99.00/Day</a>
-                </div>
-            </div>
+        <div class="row" id ="containerCar" >
             <div class="col-lg-4 col-md-6 mb-2">
                 <div class="rent-item active mb-4">
                     <img class="img-fluid mb-4" src="img/car-rent-2.png" alt="">
@@ -517,6 +462,7 @@ foreach ($cars as $car) {
 
 <!-- Template Javascript -->
 <script src="js/main.js"></script>
+<script src = "js/dataFetch.js"></script>
 </body>
 
 </html>

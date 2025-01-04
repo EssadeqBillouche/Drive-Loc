@@ -5,7 +5,6 @@ use classes\Autoloader;
 use classes\category;
 
 Autoloader::AutoloaderFunction();
-
 if ( $_SESSION['role'] == 1) {
 
 }else{
@@ -239,14 +238,12 @@ if ( $_SESSION['role'] == 1) {
                                                         echo '<option value="' . $Category["Category_id"] . '">' . $Category["Category_name"] . '</option>';
                                                     }
                                                  ?>
-
-
                                             </select>
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label for="gearbox1">availability</label>
                                             <select id="gearbox1" class="form-control" name="availability[]">
-                                                <option value="available">available</option>
+                                                <option value="availability">available</option>
                                                 <option value="Occupied">Occupied</option>
                                             </select>
                                         </div>
@@ -434,6 +431,26 @@ if ( $_SESSION['role'] == 1) {
                             <option value="Manual">Manual</option>
                         </select>
                     </div>
+                    <div class="form-group col-md-4">
+                                            <label for="gearbox1">Category</label>
+                                            <select id="gearbox1" class="form-control" name="Category[]">
+                                                 <?php
+                                                        $Categories = category::displayAllCategories();
+                                                        foreach ($Categories as $Category) {
+                                                            echo '<option value="' . $Category["Category_id"] . '">' . $Category["Category_name"] . '</option>';
+
+                                                        }
+                                                        ?>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="gearbox1">availability</label>
+                                            <select id="gearbox1" class="form-control" name="availability[]">
+                                                <option value="availability">available</option>
+                                                <option value="Occupied">Occupied</option>
+                                            </select>
+                                        </div>
+
                     <div class="form-group col-md-4">
                         <label for="mileage${carCount}">Mileage</label>
                         <input type="number" class="form-control" id="mileage${carCount}" name="mileage[]" placeholder="Mileage" required>

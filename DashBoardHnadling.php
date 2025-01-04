@@ -15,6 +15,7 @@ if (isset($_POST['addCarFormMult']))
     $year = $_POST['year'];
     $price = $_POST['price'];
     $image = $_POST['image'];
+    $availability = $_POST['availability'];
     $NewCar = new Car();
     foreach ($carName as $index => $cars) {
         $NewCar->addCar($carName[$index],$price[$index],$image[$index],$year[$index],$availability[$index],$gearbox[$index],$mileage[$index],$category[$index]);
