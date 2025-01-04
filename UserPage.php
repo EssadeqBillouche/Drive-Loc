@@ -208,6 +208,11 @@
         </div>
     </div>
 
+    <script>
+
+    </script>
+
+
     <!-- Settings Section -->
     <div id="settings" class="tab-content active">
         <div class="container mt-4">
@@ -376,22 +381,7 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
-<script>
-    function showTab(tabId) {
-        // Hide all tab contents
-        document.querySelectorAll('.tab-content').forEach(tab => {
-            tab.classList.remove('active');
-        });
-
-        // Show selected tab content
-        document.getElementById(tabId).classList.add('active');
-
-        // Update nav links
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.classList.remove('active');
-        });
-        document.querySelector(`[href="#${tabId}"]`).classList.add('active');
-    }
+<script src="js/MyJsScript.js">
 </script>
 </body>
 </html>
