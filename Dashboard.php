@@ -211,10 +211,6 @@ if ( $_SESSION['role'] == 1) {
                                             <label for="carName1">Car Name</label>
                                             <input type="text" class="form-control" id="carName1" name="carName[]" placeholder="Car Name" required>
                                         </div>
-                                        <div class="form-group col-md-6">
-                                            <label for="carModel1">Car Model</label>
-                                            <input type="text" class="form-control" id="carModel1" name="carModel[]" placeholder="Car Model" required>
-                                        </div>
 
                                     </div>
                                     <div class="form-row">
@@ -414,10 +410,7 @@ if ( $_SESSION['role'] == 1) {
                         <label for="carName${carCount}">Car Name</label>
                         <input type="text" class="form-control" id="carName${carCount}" name="carName[]" placeholder="Car Name" required>
                     </div>
-                    <div class="form-group col-md-6">
-                        <label for="carModel${carCount}">Car Model</label>
-                        <input type="text" class="form-control" id="carModel${carCount}" name="carModel[]" placeholder="Car Model" required>
-                    </div>
+
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-4">
@@ -446,7 +439,7 @@ if ( $_SESSION['role'] == 1) {
                                         <div class="form-group col-md-4">
                                             <label for="gearbox1">availability</label>
                                             <select id="gearbox1" class="form-control" name="availability[]">
-                                                <option value="availability">available</option>
+                                                <option value="available">available</option>
                                                 <option value="Occupied">Occupied</option>
                                             </select>
                                         </div>

@@ -168,7 +168,7 @@ use classes\category;
         <!-- Category Selection -->
         <div class="col-md-4 px-2">
             <select id="SelectedCategory" class="custom-select px-4 mb-3" style="height: 50px;">
-                <option selected="all">Select Category</option>
+                <option value = 'all' selected="all">Select Category</option>
                 <?php
                 $allCategory = category::displayAllCategories();
                     foreach ($allCategory as $category) {
