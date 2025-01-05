@@ -2,6 +2,7 @@
 namespace classes;
 
 use mysql_xdevapi\Exception;
+use PDO;
 
 class car{
     private $carName;
@@ -39,6 +40,15 @@ class car{
         $stmt->execute();
         $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $stmt;
+    }
+
+    public function carById($id){
+        $db = dbConnaction::getConnection();
+        $stmt = $db->prepare("SELECT * FROM car where car_id = :id");
+        $stmt->bindParam(":id", $id);
+        $stmt->execute();
+        $info = $stmt->fetch(PDO::FETCH_ASSOC);
+        return $info;
     }
 
 }

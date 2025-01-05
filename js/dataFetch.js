@@ -65,7 +65,7 @@ function displayAllData(id) {
                             <span>${car.mileage}</span>
                         </div>
                     </div>
-                    <a class="btn btn-primary px-3" href="detail.php?id=${car.car_id}">$ ${car.car_price_per_day}</a>
+                    <a class="btn btn-primary px-3" href="Booking.php?id=${car.car_id}">$ ${car.car_price_per_day}</a>
                 </div>
             </div>`;
             }
