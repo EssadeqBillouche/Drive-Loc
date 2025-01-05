@@ -1,6 +1,8 @@
 <?php
 session_start();
 
+
+
 require_once 'classes/Autoloader.php';
 use classes\Autoloader;
 //include 'signup.php';

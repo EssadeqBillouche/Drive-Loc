@@ -125,7 +125,7 @@ Autoloader::AutoloaderFunction();
             <span class="badge badge-success mt-1">Premium Member</span>
         </div>
         <div class="p-2">
-            <a class="dropdown-item d-flex align-items-center py-2" href="#">
+            <a class="dropdown-item d-flex align-items-center py-2" href="UserPage.php">
                 <i class="fas fa-user mr-2 text-primary"></i>
                 <span>Profile</span>
             </a>
@@ -133,7 +133,7 @@ Autoloader::AutoloaderFunction();
                 <i class="fas fa-cog mr-2 text-secondary"></i>
                 <span>Settings</span>
             </a>
-            <a class="dropdown-item d-flex align-items-center py-2" href="#">
+            <a class="dropdown-item d-flex align-items-center py-2" href="UserPage.php">
                 <i class="fas fa-car mr-2 text-info"></i>
                 <span>My Bookings</span>
             </a>

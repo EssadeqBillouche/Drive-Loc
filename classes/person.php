@@ -34,7 +34,7 @@ class person {
                         header('Location: Dashboard.php');
                         exit();
                     }else{
-                        header('Location: index.php');
+                        header('Location: UserPage.php');
                         exit();
                     }
             }else{

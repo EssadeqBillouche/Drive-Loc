@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 require_once './classes/Autoloader.php';
 use classes\Autoloader;
 Autoloader::AutoloaderFunction();
@@ -124,7 +124,7 @@ use classes\category;
             <span class="badge badge-success mt-1">Premium Member</span>
         </div>
         <div class="p-2">
-            <a class="dropdown-item d-flex align-items-center py-2" href="#">
+            <a class="dropdown-item d-flex align-items-center py-2" href="userPage.php">
                 <i class="fas fa-user mr-2 text-primary"></i>
                 <span>Profile</span>
             </a>
@@ -132,7 +132,7 @@ use classes\category;
                 <i class="fas fa-cog mr-2 text-secondary"></i>
                 <span>Settings</span>
             </a>
-            <a class="dropdown-item d-flex align-items-center py-2" href="#">
+            <a class="dropdown-item d-flex align-items-center py-2" href="UserPage.php">
                 <i class="fas fa-car mr-2 text-info"></i>
                 <span>My Bookings</span>
             </a>
@@ -181,7 +181,7 @@ use classes\category;
 
         <!-- Search Input -->
         <div class="col-md-4 px-2">
-            <input type="text" class="form-control px-4 mb-3" placeholder="Search..." style="height: 50px;">
+            <input id = "searchInput" type="text" class="form-control px-4 mb-3" placeholder="Search..." style="height: 50px;">
         </div>
 
         <!-- Search Button -->

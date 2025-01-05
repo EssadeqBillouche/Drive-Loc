@@ -3,8 +3,26 @@ session_start();
 require 'classes/Autoloader.php';
 use classes\Autoloader;
 use classes\category;
+use classes\user;
+use classes\car;
+use classes\reservation;
 
 Autoloader::AutoloaderFunction();
+
+if (isset($_GET['approveId'])) {
+    $reservationId = $_GET['approveId'];
+    echo $reservationId;
+    $newReservation = new reservation();
+    $newReservation->changeStatus('Accepted', $reservationId);
+    header('location: dashboard.php');
+}
+if (isset($_GET['refuseId'])) {
+    $reservationId = $_GET['refuseId'];
+    echo $reservationId;
+    $newReservation = new reservation();
+    $newReservation->changeStatus('Refused', $reservationId);
+    header('location: dashboard.php');
+}
 if ( $_SESSION['role'] == 1) {
 
 }else{
@@ -54,8 +72,10 @@ if ( $_SESSION['role'] == 1) {
         </div>
         <div class="col-md-6 text-right">
             <div class="d-inline-flex align-items-center">
-                <img src="img/admin-avatar.png" alt="Admin Avatar" class="rounded-circle" width="40" height="40">
-                <span class="ml-2">Admin Name</span>
+                <img src="https://cdn1.iconfinder.com/data/icons/user-pictures/101/malecostume-1024.png" class="rounded-circle" style="width: 50px; height: 50px;">
+                <?php
+                echo '<span class="ml-2">Admin '.$_SESSION['name'].'</span>';
+                ?>
                 <form action="logout.php" method="POST" style="display: inline;">
                     <button type="submit" class="btn btn-danger btn-sm ml-3">
                         <i class="fa fa-sign-out-alt"></i> Logout
@@ -273,15 +293,20 @@ if ( $_SESSION['role'] == 1) {
 
 
         <!-- Main Dashboard Area -->
-        <div class="col-md-9 pt-4">
-            <!-- Statistics Section -->
+        <!-- Statistics Section -->
+        <div class="col-md-9 pt-4">  <!-- Statistics Section -->
+
             <div class="row mb-4">
                 <div class="col-md-4">
                     <div class="card text-center bg-primary text-white">
                         <div class="card-body">
                             <i class="fa fa-car fa-2x mb-3"></i>
                             <h5>Total Cars</h5>
-                            <h2>50</h2>
+                            <?php
+                                $CarNumber = car::carCount();
+                                echo '<h2>'. $CarNumber . '</h2>';
+                            ?>
+
                         </div>
                     </div>
                 </div>
@@ -290,7 +315,10 @@ if ( $_SESSION['role'] == 1) {
                         <div class="card-body">
                             <i class="fa fa-calendar-check fa-2x mb-3"></i>
                             <h5>Total Reservations</h5>
-                            <h2>120</h2>
+                            <?php
+                            $reservation = reservation::reservationCount();
+                            echo '<h2>'. $reservation . '</h2>';
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -299,7 +327,10 @@ if ( $_SESSION['role'] == 1) {
                         <div class="card-body">
                             <i class="fa fa-users fa-2x mb-3"></i>
                             <h5>Total Users</h5>
-                            <h2>200</h2>
+                            <?php
+                            $UserCount = user::userCount();
+                            echo '<h2>'. $UserCount . '</h2>';
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -317,23 +348,34 @@ if ( $_SESSION['role'] == 1) {
                             <th>Car Model</th>
                             <th>Pickup Date</th>
                             <th>Return Date</th>
+                            <th>Pickup Location</th>
+                            <th>Return Location</th>
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>John Doe</td>
-                            <td>Toyota Corolla</td>
-                            <td>2024-01-01</td>
-                            <td>2024-01-07</td>
-                            <td><span class="badge badge-warning">Pending</span></td>
-                            <td>
-                                <button class="btn btn-success btn-sm"><i class="fa fa-check"></i> Approve</button>
-                                <button class="btn btn-danger btn-sm"><i class="fa fa-times"></i> Cancel</button>
+                        <?php
+                        $newReservation = new reservation();
+                        $reservations = $newReservation->allResevations();
+                        var_dump($reservations);
+                        foreach ($reservations as $reservation) {
+                            echo '<tr>
+                            <td>'.htmlspecialchars($reservation["reservation_id"]).'</td>
+                            <td>'.htmlspecialchars($reservation["user_name"]).'</td>
+                            <td>'.htmlspecialchars($reservation["car_brand"]).'</td>
+                            <td>'.htmlspecialchars($reservation["pickup_date"]).'</td>
+                            <td>'.htmlspecialchars($reservation["drop_date"]).'</td>
+                            <td>'.htmlspecialchars($reservation["pickup_location"]).'</td>
+                            <td>'.htmlspecialchars($reservation["drop_location"]).'</td>
+                            <td><span class="badge badge-warning">'.htmlspecialchars($reservation["statu"]).'</span></td>
+                            <td><a href="Dashboard.php?approveId='.htmlspecialchars($reservation["reservation_id"]).'" class="btn btn-success btn-sm"><i class="fa fa-check"></i> Approve</a>
+                                <a href="Dashboard.php?refuseId='.htmlspecialchars($reservation["reservation_id"]).'" class="btn btn-danger btn-sm"><i class="fa fa-times"></i> Refuse</a>
                             </td>
-                        </tr>
+                        </tr>';
+                        }
+
+                        ?>
                         <!-- Add more rows as needed -->
                         </tbody>
                     </table>

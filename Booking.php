@@ -15,26 +15,29 @@ try {
     echo "errori from autoloader".$e->getMessage();
 }
 
-if (isset($_POST["addReservation"])) {
-    echo "hhshdhsfdhhfsd";
+
 
     if (isset($_POST["addReservation"])) {
         $pickupDate = $_POST["pickupDate"];
         $dropDate = $_POST["dropDate"];
+        echo $dropDate .'<br>';
+        echo $pickupDate.'<br>';
         $pickupLocation = $_POST["pickupLocation"];
         $dropLocation = $_POST["dropLocation"];
+        $pickupDate = DateTime::createFromFormat('d/m/Y', $pickupDate)->format('Y-m-d');
+        $dropDate = DateTime::createFromFormat('d/m/Y', $dropDate)->format('Y-m-d');
         $carId = $_GET["id"];
-        $userId = 22;
+        $userId = $_SESSION["id"];
         try {
             $newReservation = new reservation();
-            $reservation = $newReservation->addReservation($carId,$userId,$pickupDate, $dropDate, $pickupLocation, $dropLocation);
+            $reservation = $newReservation->addReservation($carId,$userId, $pickupLocation, $dropLocation,$pickupDate, $dropDate);
             echo $reservation;
         }catch (Exception $e){
             echo $e->getMessage();
         }
 
     }
-}
+
 ?>
 
 
@@ -113,15 +116,15 @@ if (isset($_POST["addReservation"])) {
             </button>
             <div class="collapse navbar-collapse justify-content-between px-3" id="navbarCollapse">
                 <div class="navbar-nav ml-auto py-0">
-                    <a href="index.php" class="nav-item nav-link">Home</a>
+                    <a href="index.html" class="nav-item nav-link active">Home</a>
                     <a href="about.html" class="nav-item nav-link">About</a>
                     <a href="service.html" class="nav-item nav-link">Service</a>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle active" data-toggle="dropdown" aria-expanded="false">Cars</a>
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Cars</a>
                         <div class="dropdown-menu rounded-0 m-0">
                             <a href="CarDisplay.php" class="dropdown-item">Car Listing</a>
                             <a href="detail.html" class="dropdown-item">Car Detail</a>
-                            <a href="booking.html" class="dropdown-item active">Car Booking</a>
+                            <a href="booking.html" class="dropdown-item">Car Booking</a>
                         </div>
                     </div>
                     <div class="nav-item dropdown">
@@ -132,6 +135,54 @@ if (isset($_POST["addReservation"])) {
                         </div>
                     </div>
                     <a href="contact.html" class="nav-item nav-link">Contact</a>
+                    <?php
+                    if (isset($_SESSION['name'])) {
+                        echo '<div class="nav-item dropdown">
+    <a href="#" class="nav-link dropdown-toggle d-flex align-items-center" data-toggle="dropdown">
+        <div class="profile-avatar bg-primary rounded-circle d-flex align-items-center justify-content-center position-relative" 
+             style="width: 40px; height: 40px;">
+            <span class="text-white font-weight-bold">'.substr($_SESSION["name"], -1).'</span>
+            <span class="status-badge"></span>
+        </div>
+        <span class="ml-2 d-none d-md-inline text-white">'.$_SESSION["name"].'</span>
+    </a>
+    <div class="dropdown-menu dropdown-menu-right profile-dropdown">
+        <div class="px-4 py-3 bg-light border-bottom">
+            <span class="d-block text-muted small">Signed in as</span>
+            <span class="d-block font-weight-bold">'.$_SESSION["name"].'</span>
+            <span class="badge badge-success mt-1">Premium Member</span>
+        </div>
+        <div class="p-2">
+            <a class="dropdown-item d-flex align-items-center py-2" href="UserPage.php">
+                <i class="fas fa-user mr-2 text-primary"></i>
+                <span>Profile</span>
+            </a>
+            <a class="dropdown-item d-flex align-items-center py-2" href="#">
+                <i class="fas fa-cog mr-2 text-secondary"></i>
+                <span>Settings</span>
+            </a>
+            <a class="dropdown-item d-flex align-items-center py-2" href="UserPage.php#Booking">
+                <i class="fas fa-car mr-2 text-info"></i>
+                <span>My Bookings</span>
+            </a>
+        </div>
+        <div class="dropdown-divider"></div>
+        <div class="dropdown-divider"></div>
+        <form action="logout.php" method="POST" style="display: inline;">
+    <button type="submit" class="btn btn-danger btn-sm ml-3" name="Logoutbtn">
+        <i class="fa fa-sign-out-alt"></i> Logojjjut
+    </button>
+</form>
+
+
+    </div>
+</div><button class="btn btn-danger btn-sm ml-3" href="logout.php"><i class="fa fa-sign-out-alt"></i> Logout</button>';
+                    }else{
+                        echo '<a href="login.php" class="nav-item nav-link">Login</a>
+                        <a href="signup.php" class="nav-item nav-link"><span class="btn btn-primary py-md-1 px-md-3">Sign Up</span></a>';
+                    }
+                    ?>
+
                 </div>
             </div>
         </nav>
@@ -183,8 +234,8 @@ $htmlBooking = '
                 </div>
             </div>
             <div class="form-group">
-                <div class="time" id="time1" data-target-input="nearest">
-                    <input name="dropDate" type="text" class="form-control p-4 datetimepicker-input" placeholder="Pickup Time" data-target="#time1" data-toggle="datetimepicker">
+                <div class="date" id="date2" data-target-input="nearest">
+                <input name="dropDate" type="text" class="form-control p-4 datetimepicker-input" placeholder="Drop Date" data-target="#date2" data-toggle="datetimepicker">
                 </div>
             </div>
 
@@ -217,11 +268,12 @@ $htmlNotAvailable = '            <div class="col-lg-4 mb-4">
                 </div>
             </div></div>';
 
-if($carInfo["car_availability"] === 'available'){
-    $htmlVariable = $htmlBooking;
-}else{
+if (session_status() == PHP_SESSION_NONE || $carInfo["car_availability"] !== 'available') {
     $htmlVariable = $htmlNotAvailable;
+} else {
+    $htmlVariable = $htmlBooking;
 }
+
 
 echo '<div class="container-fluid pt-5">
     <div class="container pt-5 pb-3">
@@ -284,7 +336,17 @@ echo '<div class="container-fluid pt-5">
 <!-- Car Booking Start -->
 
 <!-- Car Booking End -->
-
+<script>
+    $(function () {
+        // Initialize the datepicker with a specific format
+        $('#date1').datetimepicker({
+            format: 'DD/MM/YYYY'
+        });
+        $('#date2').datetimepicker({
+            format: 'DD/MM/YYYY'
+        });
+    });
+</script>
 
 <!-- Vendor Start -->
 

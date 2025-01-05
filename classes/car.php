@@ -15,7 +15,7 @@ class car{
     private $availability;
     private $carCategory;
 
-    public function addCar($carName, $carPrice, $carImage, $carModel, $carAvailability, $carGearBox, $carMileage, $carCategory,){
+    public function addCar($carName, $carPrice, $carImage, $carModel, $carAvailability, $carGearBox, $carMileage, $carCategory){
         $db = dbConnaction::getConnection();
         try {
             $stmnt = $db->prepare("Insert into car (car_brand,car_category,car_image,car_price_per_day,car_availability,model,GearBox,mileage) values (:name, :category, :image, :price,:availability, :model, :GearBox, :mileage)");
@@ -42,16 +42,37 @@ class car{
         return $stmt;
     }
 
-    public function carById($id){
+    public function carById($id) {
         $db = dbConnaction::getConnection();
-        $stmt = $db->prepare("SELECT * FROM car where car_id = :id");
-        $stmt->bindParam(":id", $id);
+        try {
+            $stmt = $db->prepare("SELECT * FROM car WHERE car_id = :id");
+            $stmt->bindParam(":id", $id, PDO::PARAM_INT);
+            $stmt->execute();
+            $info = $stmt->fetch(PDO::FETCH_ASSOC);
+            if ($info === false) {
+                return false;
+            }
+
+            return $info;
+
+        } catch (Exception $e) {
+            echo "Error: " . $e->getMessage();
+            return false;
+        }
+    }
+
+
+    public static function carCount(){
+        $db = dbConnaction::getConnection();
+        $stmt = $db->prepare("SELECT COUNT(*) as result FROM car");
         $stmt->execute();
-        $info = $stmt->fetch(PDO::FETCH_ASSOC);
-        return $info;
+        $result =$stmt->fetch(PDO::FETCH_ASSOC);
+        return $result["result"];
     }
 
 }
+
+
 
 
 

@@ -22,7 +22,10 @@ class user extends person
        header('Location: /Drive-Loc/login.php');
        exit();
     }
-
-
-
+    public static function userCount(){
+        $db = dbConnaction::getConnection();
+        $statement = $db->query("SELECT COUNT(*) as result FROM users");
+        $result = $statement->fetch();
+        return $result["result"];
+    }
 }

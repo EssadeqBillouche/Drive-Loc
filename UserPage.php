@@ -1,5 +1,13 @@
 <?php
 
+use classes\car;
+use classes\reservation;
+session_start();
+require_once 'classes/Autoloader.php';
+require 'logout.php';
+use classes\Autoloader;
+use classes\user;
+use classes\person;
 
 ?>
 
@@ -164,13 +172,13 @@
     </div>
 
     <nav>
-        <a href="#" class="nav-link">
+        <a href="index.php" class="nav-link">
             <i class="fas fa-bell"></i>
-            Notifications
+            Home
         </a>
-        <a href="#" class="nav-link">
+        <a href="pagination.php" class="nav-link">
             <i class="fas fa-user"></i>
-            Drivers
+            Car List
         </a>
         <a href="#bookings" class="nav-link" onclick="showTab('bookings')">
             <i class="fas fa-calendar"></i>
@@ -202,8 +210,10 @@
         </div>
         <div class="d-flex align-items-center gap-3">
             <i class="fas fa-bell"></i>
-            <img src="/api/placeholder/40/40" class="rounded-circle">
-            <span>Mason Wilson</span>
+            <img src="https://cdn1.iconfinder.com/data/icons/user-pictures/101/malecostume-1024.png" class="rounded-circle" style="width: 50px; height: 50px;">
+            <?php
+            echo '<span class="ml-2"> '.$_SESSION['name'].'</span>';
+            ?>
             <i class="fas fa-chevron-down"></i>
         </div>
     </div>
@@ -295,86 +305,62 @@
 
             <!-- Booking Cards -->
             <div class="row">
-                <!-- Active Booking -->
-                <div class="col-md-6 mb-4">
-                    <div class="booking-card p-4">
-                        <div class="d-flex justify-content-between align-items-start mb-3">
-                            <div>
-                                <h5 class="mb-1">Mercedes Benz C-Class</h5>
-                                <p class="text-muted mb-0">Booking ID: #12345</p>
-                            </div>
-                            <span class="booking-status status-active">Active</span>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-6">
-                                <small class="text-muted">Pickup Date</small>
-                                <p class="mb-0">Jan 15, 2025</p>
-                            </div>
-                            <div class="col-6">
-                                <small class="text-muted">Return Date</small>
-                                <p class="mb-0">Jan 20, 2025</p>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <h5 class="mb-0">$350/day</h5>
-                            <button class="btn btn-primary btn-sm">View Details</button>
-                        </div>
-                    </div>
-                </div>
+                <?php
 
-                <!-- Pending Booking -->
-                <div class="col-md-6 mb-4">
-                    <div class="booking-card p-4">
-                        <div class="d-flex justify-content-between align-items-start mb-3">
-                            <div>
-                                <h5 class="mb-1">BMW X5</h5>
-                                <p class="text-muted mb-0">Booking ID: #12346</p>
-                            </div>
-                            <span class="booking-status status-pending">Pending</span>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-6">
-                                <small class="text-muted">Pickup Date</small>
-                                <p class="mb-0">Jan 25, 2025</p>
-                            </div>
-                            <div class="col-6">
-                                <small class="text-muted">Return Date</small>
-                                <p class="mb-0">Jan 28, 2025</p>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center">
-                            <h5 class="mb-0">$420/day</h5>
-                            <button class="btn btn-primary btn-sm">View Details</button>
-                        </div>
-                    </div>
-                </div>
+                $newreservation = new reservation();
+                $result = $newreservation->reservationByUserId($_SESSION['id']);
+                var_dump($result);
+                $newcar = new car();
+                echo '<br>';
 
-                <!-- Completed Booking -->
-                <div class="col-md-6 mb-4">
+                foreach ($result as $row) {
+                    if ($row["statu"] === 'completed')
+                    {
+
+                        $statusRating = '<span class="booking-status status-completed">Completed</span>';
+                        $LeaveRating = '<a href="rating.php?useId='.$row["user_fk"].'&carId='.$row["car_fk"].'&reId='.$row["reservation_id"].'" class="btn btn-primary btn-sm">Add Rating </a>';
+                    }elseif ($row["statu"] === 'cancled'){
+                        $statusRating = '<span class="booking-status status-cancelled">Cancelled</span>';
+                        $LeaveRating = '';
+                    }elseif ($row["statu"] === 'Pending'){
+                        $statusRating = '<span class="booking-status status-pending">Pending</span>';
+                        $LeaveRating = '';
+                    }elseif ($row["statu"] === 'Accepted'){
+                        $statusRating = '<span class="booking-status status-active">Active</span>';
+                        $LeaveRating = '';
+                    }
+
+                    $car = $newcar->carById($row["car_fk"]);
+                    $carName = $car["car_brand"];
+                    $carPrice = $car["car_price_per_day"];
+
+                    echo '<div class="col-md-6 mb-4">
                     <div class="booking-card p-4">
                         <div class="d-flex justify-content-between align-items-start mb-3">
                             <div>
-                                <h5 class="mb-1">Audi A6</h5>
-                                <p class="text-muted mb-0">Booking ID: #12344</p>
+                                <h5 class="mb-1">'.$carName.'</h5>
+                                <p class="text-muted mb-0">Booking ID: '.$row["reservation_id"].'</p>
                             </div>
-                            <span class="booking-status status-completed">Completed</span>
+                            '.$statusRating.'
                         </div>
                         <div class="row mb-3">
                             <div class="col-6">
                                 <small class="text-muted">Pickup Date</small>
-                                <p class="mb-0">Jan 5, 2025</p>
+                                <p class="mb-0">'.$row["pickup_date"].'</p>
                             </div>
                             <div class="col-6">
                                 <small class="text-muted">Return Date</small>
-                                <p class="mb-0">Jan 10, 2025</p>
+                                <p class="mb-0">'.$row["drop_date"].'</p>
                             </div>
                         </div>
                         <div class="d-flex justify-content-between align-items-center">
-                            <h5 class="mb-0">$380/day</h5>
-                            <button class="btn btn-primary btn-sm">View Details</button>
+                            <h5 class="mb-0">$'.$carPrice.'/day</h5>
+                            '.$LeaveRating.'
                         </div>
                     </div>
-                </div>
+                </div>';
+                }
+                ?>
             </div>
         </div>
     </div>
