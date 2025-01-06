@@ -3,12 +3,20 @@ session_start();
 require_once 'classes/Autoloader.php';
 require 'logout.php';
 use classes\Autoloader;
-use classes\user;
+use classes\Rating;
 use classes\person;
 
 if (isset($_POST['submit'])) {
-    $userId = $_GET['userId'];
+    $userId = $_GET['useId'];
     $carId = $_GET['carId'];
+    $reId = $_GET['reId'];
+    $rating = $_POST['rating'];
+    $newRating = new Rating();
+    $newRating->addRating($carId,$userId, $reId,$rating,'active');
+    header('location: UserPage.php');
+
+
+
 
 
 }
@@ -148,9 +156,9 @@ if (isset($_POST['submit'])) {
             <div class="rating-container">
                 <h2 class="mb-4 font-weight-bold">Rate This Car</h2>
                 <form action="" method="post" class="range-wrap">
-                    <input type="range" class="range" min="0" max="5" value="0" step="0.5" oninput="this.nextElementSibling.value = this.value">
+                    <input type="range" name='rating' class="range" min="0" max="5" value="0" step="0.5" oninput="this.nextElementSibling.value = this.value">
                     <output class="range-output">0</output>
-                    <button type="submit" class="btn btn-warning">Send Rating</button>
+                    <button name="submit" type="submit" class="btn btn-warning">Send Rating</button>
                 </form>
             </div>
         </div>
