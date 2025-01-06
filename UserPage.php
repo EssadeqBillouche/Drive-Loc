@@ -318,7 +318,7 @@ use classes\person;
                     {
 
                         $statusRating = '<span class="booking-status status-completed">Completed</span>';
-                        $LeaveRating = '<a href="rating.php?useId='.$row["user_fk"].'&carId='.$row["car_fk"].'&reId='.$row["reservation_id"].'" class="btn btn-primary btn-sm">Add Rating </a>';
+                        $LeaveRating = '<a href="rating.php?useId='.$row["user_fk"].'&carId='.$row["car_fk"].'&reId='.$row["user_fk"].'" class="btn btn-primary btn-sm">Add Rating </a>';
                     }elseif ($row["statu"] === 'cancled'){
                         $statusRating = '<span class="booking-status status-cancelled">Cancelled</span>';
                         $LeaveRating = '';

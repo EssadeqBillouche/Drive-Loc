@@ -4,6 +4,7 @@
 session_start();
 require_once 'classes/Autoloader.php';
 use classes\Autoloader;
+use classes\Rating;
 use classes\reservation;
 use classes\car;
 use classes\person;
@@ -268,12 +269,15 @@ $htmlNotAvailable = '            <div class="col-lg-4 mb-4">
                 </div>
             </div></div>';
 
-if (session_status() == PHP_SESSION_NONE || $carInfo["car_availability"] !== 'available') {
+if (empty($_SESSION['id']) || $carInfo["car_availability"] !== 'available') {
     $htmlVariable = $htmlNotAvailable;
 } else {
     $htmlVariable = $htmlBooking;
 }
 
+$newRating = new rating();
+$result = $newRating->getRating($_GET['id']);
+var_dump($result);
 
 echo '<div class="container-fluid pt-5">
     <div class="container pt-5 pb-3">
@@ -286,14 +290,10 @@ echo '<div class="container-fluid pt-5">
             <div class="col-lg-4 mb-4">
                 <h4 class="mb-2">$'.htmlspecialchars($carInfo ["car_price_per_day"]).'</h4>
                 <div class="d-flex mb-3">
-                    <h6 class="mr-2">Rating:</h6>
+                    <h6 class="mr-2">Rating: '.htmlspecialchars($result["average_rating"]).'</h6>
                     <div class="d-flex align-items-center justify-content-center mb-1">
-                        <small class="fa fa-star text-primary mr-1"></small>
-                        <small class="fa fa-star text-primary mr-1"></small>
-                        <small class="fa fa-star text-primary mr-1"></small>
-                        <small class="fa fa-star text-primary mr-1"></small>
-                        <small class="fa fa-star-half-alt text-primary mr-1"></small>
-                        <small>(250)</small>
+                        
+                        <small>('.htmlspecialchars($result["rating_count"]).')</small>
                     </div>
                 </div>
                 <p>Tempor erat elitr at rebum at at clita aliquyam consetetur. Diam dolor diam ipsum et, tempor voluptua sit consetetur sit. Aliquyam diam amet diam et eos sadipscing labore. Clita erat ipsum et lorem et sit, sed stet no labore lorem sit. Sanctus clita duo justo et tempor consetetur takimata eirmod, dolores takimata consetetur invidunt</p>

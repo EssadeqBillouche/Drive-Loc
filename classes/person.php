@@ -38,7 +38,7 @@ class person {
                         exit();
                     }
             }else{
-                var_dump($password);
+                header('Location: Login.php');
             }
     }
 

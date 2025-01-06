@@ -14,11 +14,7 @@ if (isset($_POST['submit'])) {
     $newRating = new Rating();
     $newRating->addRating($carId,$userId, $reId,$rating,'active');
     header('location: UserPage.php');
-
-
-
-
-
+    
 }
 
 ?>
